@@ -43,6 +43,7 @@ export class AppComponent implements OnInit{
       this.form.controls.dayRangeControl.valueChanges.pipe(startWith(1))
     ]).pipe(
       switchMap(([cityControl, days]) => {
+        //TODO move to method
         const endDateString = new Date().toISOString().split('T')[0];
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - days)

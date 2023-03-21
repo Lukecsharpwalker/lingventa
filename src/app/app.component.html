@@ -1,13 +1,28 @@
 <form [formGroup]="form">
-  <select formControlName="cityControl">
+  <select class="form-select" formControlName="cityControl">
     <option *ngFor="let city of cities">
       {{ city.name }}
     </option>
   </select>
-  <select formControlName="dayRangeControl">
+  <select class="form-select" formControlName="dayRangeControl">
     <option *ngFor="let day of dayRanges">
       {{ day }}
     </option>
   </select>
 </form>
-{{forecast$ | async | json}}
+ {{this.form.controls.cityControl.value}}
+<ng-container *ngIf="forecast$ | async as forecast">
+  <!-- TODO: Add {{forecast.daily.time}} to each value -->
+  <span class="list-group" *ngFor="let temp of forecast.daily.temperature_2m_max">
+    <span class="list-group-item"> max temperature: {{ temp }}  {{forecast.daily_units.temperature_2m_max}}</span>
+  </span>
+  <span class="list-group" *ngFor="let rain of forecast.daily.rain_sum">
+    <span class="list-group-item"> rain summary: {{ rain }} {{forecast.daily_units.rain_sum}}</span>
+  </span>
+  <span class="list-group" *ngFor="let sunrise of forecast.daily.sunrise">
+    <span class="list-group-item"> Sunrise Time: {{ sunrise }} {{forecast.daily_units.sunrise}}</span>
+  </span>
+  <span class="list-group" *ngFor="let sunset of forecast.daily.sunset">
+    <span class="list-group-item"> Sunset Time: {{ sunset }}  {{forecast.daily_units.sunset}}</span>
+  </span>
+</ng-container>
